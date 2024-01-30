@@ -7,7 +7,7 @@ server = r'Hp-Elitebook\SQLEXPRESS'
 database = 'DB_OSMAR_PROJECT'
 username = 'devcafe'
 password = 'cafe'
-driver = '{ODBC Driver 18 for SQL Server}'  # Substitua pelo driver adequado
+driver = '{ODBC Driver 18 for SQL Server}'  
 
 
 conn_str = f'DRIVER={driver};SERVER={server};DATABASE={database};UID={username};PWD={password};Encrypt=no'
@@ -15,7 +15,9 @@ conn = pyodbc.connect(conn_str)
 cursor = conn.cursor()
 
 #DIRECTORY
-caminho_arquivos = 'C:\\Users\\vasqu\\OneDrive\\Projetos\\PROJETO OSMAR\\SERVIDOR'
+caminho_arquivos = 'seu diretório dos arquivos'
+
+#tratamento da sessões
 
 try:
 
@@ -31,7 +33,7 @@ try:
 
 
                 for session in root.findall('.//x:session',
-                                            namespaces={'x': 'http://www.verint.com/xmlns/recording20080320'}):
+                                            namespaces={'x': 'xxxx'}):
                     session_id = session.get('x:id')
 
 
@@ -41,8 +43,8 @@ try:
                     sql = "INSERT INTO [dbo].[TB_STG_CALL_DATA] (session_id"
                     values = f"VALUES ('{session_id}'"
 
-                    for tag in session.findall('.//x:tag', namespaces={'x': 'http://www.verint.com/xmlns/recording20080320'}):
-                        for attribute in tag.findall('x:attribute', namespaces={'x': 'http://www.verint.com/xmlns/recording20080320'}):
+                    for tag in session.findall('.//x:tag', namespaces={'x': 'xxxxxxx'}):
+                        for attribute in tag.findall('x:attribute', namespaces={'x': 'xxxxxxxxxxx'}):
                             key = attribute.get('x:key')
                             value = attribute.text
                             sql += f", {key}"
@@ -63,5 +65,5 @@ except Exception as main_exception:
     print(f"Erro principal: {str(main_exception)}")
 
 finally:
-    # Fecha a conexão
+   
     conn.close()
